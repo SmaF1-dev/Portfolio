@@ -2,7 +2,7 @@ import './globals.scss'
 import Head from 'next/head'
 
 export const metadata = {
-  title: 'L1tDeV',
+  title: 'SmaF1',
   description: 'This site-portfolio is written in Next.js',
 }
 
