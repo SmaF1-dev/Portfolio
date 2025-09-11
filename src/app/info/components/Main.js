@@ -21,7 +21,7 @@ const Information = ({btn}) => {
                 <h2>Я начи&shy;нающий <span className={styles.green_txt}>Frontend-developer</span>. 
             В сети использую псевдоним<span className={styles.yellow_txt}> SmaF1</span>. 
             Сейчас я изучаю языки програм&shy;мирования, исполь&shy;зуемые в web-&shy;разработке, такие как <span className={styles.blue_txt}>JavaScript</span>,
-            <span className={styles.blue_txt}> React.js</span>, <span className={styles.blue_txt}>Next.js</span> и <span className={styles.blue_txt}>php</span>. 
+            <span className={styles.blue_txt}> React.js</span>, <span className={styles.blue_txt}>Next.js</span>,<span className={styles.blue_txt}>Python</span> и <span className={styles.blue_txt}>FastAPI</span>. 
             Буду рад сотрудни&shy;честву.</h2>
                 {btn}
             </div>
@@ -149,3 +149,4 @@ const Main = () =>{
 }
 
 export default Main
+
