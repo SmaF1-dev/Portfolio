@@ -9,7 +9,7 @@ Before you start, make sure that you have Node installed.js of the current versi
 
 First, clone this repository:
 ```bash
-git clone https://github.com/aimclub/Portfolio.git
+git clone https://github.com/SmaF1-dev/Portfolio.git
 ```
 
 Secondly, build the app:
