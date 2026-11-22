@@ -1,11 +1,5 @@
-import Header from "./components/Header";
-import Main from "./components/Main";
+import SearchExperience from './components/SearchExperience';
 
 export default function Home() {
-  return (
-    <>
-      <Header />
-      <Main />
-    </>
-  )
+  return <SearchExperience />;
 }

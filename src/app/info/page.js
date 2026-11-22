@@ -1,11 +1,5 @@
-import Main from "./components/Main";
-import Header from "./components/Header";
+import { redirect } from 'next/navigation';
 
-export default function Info() {
-  return (
-    <>
-      <Header />
-      <Main />
-    </>
-  )
+export default function LegacyInfoPage() {
+  redirect('/explore/about');
 }
