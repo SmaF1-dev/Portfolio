@@ -1,39 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
-
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-clr: 13,16,21;
-  --clr_for_case: #161B22;
-  --clr_for_brdr: #30363C;
-  --clr_blue: #476FD6;
-  --clr_green: #47D680;
-  --clr_yellow: #D6BF47;
-  --clr_prpl: #600FC8;
-  --clr_orange: #D67A47;
-
-  --html_skills: 70%;
-  --js_skills: 60%;
-  --php_skills: 30%;
-  --react_skills: 60%;
-  --next_skills: 50%;
-  --git_skills: 50%;
-  --figma_skills: 60%;
-  --css_skills: 65%;
-  --python_skills: 60%;
-
-  --blue_skill: #476FD6;
-  --green_skill: #47D680;
-  --yellow_skill: #D6BF47;
-
-
-  
-  font-family: 'Rubik', sans-serif;
+  color-scheme: dark;
+  --bg: #080b13;
+  --surface: #101521;
+  --line: rgba(179, 194, 224, .14);
+  --text: #f4f6fc;
+  --muted: #98a4ba;
+  --faint: #69768c;
+  --violet: #a08bff;
+  --mint: #77efd4;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-clr));
-}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+::selection { background: rgba(160, 139, 255, .4); color: #fff; }
+:focus-visible { outline: 2px solid #b7a7ff; outline-offset: 4px; }
+
+.notFoundPage { min-height: 100vh; display: flex; flex-direction: column; }
+.notFoundPage main { width: min(100% - 48px, 1080px); margin: auto; padding: 120px 0; }
+.notFoundPage h1 { font-size: clamp(40px, 8vw, 92px); letter-spacing: -.06em; line-height: 1.04; margin: 22px 0; }
+.notFoundPage p { color: var(--muted); font-size: 18px; max-width: 520px; line-height: 1.6; }
+.notFoundPage main a { display: inline-flex; padding: 16px 22px; margin-top: 24px; background: #9786f7; color: #080b13; font-weight: 750; border-radius: 12px; }
+.notFoundCode { color: var(--violet); letter-spacing: .2em; font-size: 12px; font-weight: 750; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }

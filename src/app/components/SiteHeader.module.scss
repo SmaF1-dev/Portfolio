@@ -1,0 +1,33 @@
+.header {
+  width: 100%; position: relative; z-index: 10;
+  border-bottom: 1px solid rgba(183, 197, 229, .095);
+}
+.inner {
+  min-height: 82px; width: min(100% - 76px, 1360px); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 28px;
+}
+.brand { display: flex; align-items: center; gap: 13px; flex: 0 0 auto; }
+.mark {
+  display: flex; align-items: center; justify-content: center; width: 41px; height: 41px; border-radius: 13px;
+  background: #a694ff; color: #0a0d17; font-size: 25px; font-weight: 850; letter-spacing: -.13em; line-height: 1;
+  box-shadow: 0 4px 22px rgba(143, 119, 255, .18);
+  span { color: #fff; }
+}
+.brandName { font-size: 22px; font-weight: 770; letter-spacing: -.07em; }
+.brandPeriod { color: #a998ff; }
+.centerMark { font-size: 11px; font-weight: 700; letter-spacing: .09em; color: #8490a9; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
+.dot { width: 6px; height: 6px; display: block; flex: 0 0 auto; border-radius: 50%; background: #8feccf; box-shadow: 0 0 0 4px rgba(143,236,207,.08), 0 0 16px rgba(143,236,207,.45); }
+.nav { display: flex; align-items: center; gap: 28px; }
+.navText { font-size: 13px; font-weight: 650; color: #b4bed0; transition: color .2s; &:hover { color: #fff; } }
+.github { display: inline-flex; align-items: center; gap: 9px; border: 1px solid rgba(189, 199, 225, .19); background: rgba(255,255,255,.03); padding: 11px 13px; border-radius: 11px; font-size: 13px; font-weight: 750; transition: background .2s, border-color .2s, transform .2s; &:hover { background: rgba(255,255,255,.08); border-color: rgba(189,199,225,.4); transform: translateY(-2px); } }
+.compact { background: rgba(8,11,19,.58); }
+@media (max-width: 950px) { .centerMark { display: none; } }
+@media (max-width: 620px) {
+  .inner { width: min(100% - 32px, 1360px); min-height: 70px; gap: 16px; }
+  .mark { width: 35px; height: 35px; font-size: 22px; border-radius: 11px; }
+  .brand { gap: 9px; }
+  .brandName { font-size: 20px; }
+  .nav { gap: 10px; }
+  .navText { display: none; }
+  .github { padding: 10px; gap: 7px; font-size: 12px; svg:last-child { display: none; } }
+}

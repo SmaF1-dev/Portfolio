@@ -1,51 +1,47 @@
-## Portfolio
-My web-portfolio, written on Next.js and SCSS.
+# SmaF1 Portfolio
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Интерактивное портфолио Никиты Лютого. На главной странице ник `SmaF1` печатается автоматически, после чего открываются карточки проектов, навыков, опыта и достижений. Поиск и фильтры работают локально, без серверных запросов.
 
-## Getting Started
+## Требования
 
-Before you start, make sure that you have Node installed.js of the current version (LTS version is recommended).
+- Node.js 20.9 или новее (рекомендуется актуальная LTS-версия)
+- npm
 
-First, clone this repository:
-```bash
-git clone https://github.com/SmaF1-dev/Portfolio.git
-```
+## Локальный запуск
 
-Secondly, build the app:
-```bash
-npm run build
-# or
-yarn build
-```
-
-Done. Now you can launch the app:
-
-```bash
+```powershell
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Проверка перед публикацией
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```powershell
+npm run check
+npm run lint
+npm run build
+npm run start
+```
 
-## Learn More
+При `npm run start` откройте <http://localhost:3000>.
 
-To learn more about Next.js, take a look at the following resources:
+**Важно:** перед первой установкой удалить старый `package-lock.json` и старый `yarn.lock`, затем выполнить `npm install`, чтобы получить актуальный `package-lock.json`. Обновлённый lock-файл нужно добавить в коммит вместе с кодом. В дальнейшем для чистой установки можно использовать `npm ci`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Где редактировать данные
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `src/app/data/portfolio.js` — все факты, тексты, карточки, ссылки, фильтры и подробные страницы
+- `public/avatar.jpg` — фотография
+- `src/app/components/SearchExperience.js` — автоматический ввод ника, поиск, карточки
+- `src/app/components/SearchExperience.module.scss` — оформление главной страницы и адаптивность
+- `src/app/explore/[slug]/page.js` — шаблон подробной страницы
+- `src/app/explore/[slug]/detail.module.scss` — её оформление
 
-## Deploy on Vercel
+Новые карточки добавляются в массив `portfolioItems` (с уникальным `slug`). Подробные страницы автоматически становятся доступны по `/explore/<slug>`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Framework Preset: **Next.js**. Root Directory: корень репозитория. Install Command: `npm ci` **после** обновления и коммита `package-lock.json`. Build Command: `npm run build`. Никаких токенов и серверных переменных для работы сайта не требуется.
+
+Рекомендуем перед публикацией проверить достоверность публичной информации в `portfolio.js` и контактные ссылки.

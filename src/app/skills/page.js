@@ -1,11 +1,5 @@
-import Header from "./components/Header";
-import Main from "./components/Main";
+import { redirect } from 'next/navigation';
 
-export default function Skills() {
-  return (
-    <>
-      <Header />
-      <Main />
-    </>
-  )
+export default function LegacySkillsPage() {
+  redirect('/explore/stack');
 }
