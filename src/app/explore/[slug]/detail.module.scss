@@ -15,9 +15,8 @@
 .breadcrumbs a { color: #a8b5cf; &:hover { color: #fff; } }
 .breadcrumbs span:last-child { color: var(--accent); }
 .headLayout { display: grid; grid-template-columns: minmax(0, 1fr) 296px; align-items: end; gap: 75px; padding: 82px 0 74px; border-bottom: 1px solid rgba(183,196,228,.13); }
-.topline { display: flex; align-items: center; gap: 19px; margin-bottom: 24px; }
+.topline { margin-bottom: 24px; }
 .sectionNum { color: #8894ac; font-size: 10px; letter-spacing: .16em; font-weight: 700; white-space: nowrap; }
-.accentLine { width: 75px; height: 1px; background: var(--accent); opacity: .55; }
 .overline { display: inline-flex; align-items: center; gap: 10px; color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .035em; }
 .intro h1 { margin: 19px 0 25px; font-size: clamp(45px, 5.7vw, 78px); letter-spacing: -.065em; line-height: 1.065; overflow-wrap: anywhere; }
 .intro > p { max-width: 760px; font-size: clamp(16px, 1.6vw, 18px); line-height: 1.7; color: #afbbce; margin: 0 0 23px; }

@@ -13,8 +13,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const item = getPortfolioItem(slug);
-  if (!item) return { title: 'Страница не найдена' };
-  return { title: item.title, description: item.description };
+  if (!item) return { title: 'SmaF1' };
+  return { title: 'SmaF1', description: item.description };
 }
 
 export default async function DetailPage({ params }) {
@@ -34,7 +34,7 @@ export default async function DetailPage({ params }) {
         </nav>
         <div className={styles.headLayout}>
           <div className={styles.intro}>
-            <div className={styles.topline}><span className={styles.sectionNum}>SMAF1 / EXPLORE</span><span className={styles.accentLine} /></div>
+            <div className={styles.topline}><span className={styles.sectionNum}>SMAF1 / EXPLORE</span></div>
             <div className={styles.overline}><Icon name={item.icon} size={17} /> {item.overline}</div>
             <h1>{item.title}</h1>
             <p>{item.intro}</p>

@@ -2,10 +2,7 @@ import '@fontsource-variable/rubik';
 import './globals.scss';
 
 export const metadata = {
-  title: {
-    default: 'SmaF1 — Никита Лютый | Go Backend Developer',
-    template: '%s | SmaF1',
-  },
+  title: 'SmaF1',
   description:
     'Интерактивное портфолио Никиты Лютого (SmaF1): Go, микросервисы, PostgreSQL, Kafka, проекты и достижения.',
   openGraph: {
