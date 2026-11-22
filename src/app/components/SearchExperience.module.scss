@@ -82,6 +82,24 @@
 .cardBody p { color: #a6b0c4; line-height: 1.53; font-size: 13px; margin: 0; }
 .cardBottom { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: 11px; margin-top: 23px; }
 .tagRow { display: flex; gap: 6px; flex-wrap: wrap; span { border-radius: 6px; border: 1px solid rgba(181,196,227,.12); color: #a6b2c7; background: rgba(255,255,255,.023); padding: 5px 8px; font-size: 10px; font-weight: 650; } }
+
+.cardMainLink { display: flex; flex: 1; flex-direction: column; min-width: 0; border-radius: 8px; }
+.cardMainLink:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.expandTagsButton {
+  border: 1px solid color-mix(in srgb, var(--accent), transparent 54%);
+  border-radius: 6px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent), transparent 91%);
+  padding: 5px 8px;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  &:hover { background: color-mix(in srgb, var(--accent), transparent 78%); border-color: var(--accent); }
+  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+}
+.tagRow > span, .tagRow > button { max-width: 100%; overflow-wrap: anywhere; }
 .cardStat { color: var(--accent); font-weight: 800; font-size: 11px; }
 .profileCard { grid-column: span 2; min-height: 325px; padding: 27px 28px; background: radial-gradient(circle at 82% 54%, rgba(114,88,198,.23), transparent 39%), linear-gradient(130deg, #24223f, #171b30 72%); }
 .profileCard .cardTop { margin-bottom: 30px; }
