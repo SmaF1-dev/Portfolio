@@ -96,3 +96,21 @@ test('education has no graduation dates and footer has no removed slogan', async
   const footerSource = await readFile(new URL('../src/app/components/SearchExperience.js', import.meta.url), 'utf8');
   assert.doesNotMatch(footerSource, /Made with curiosity & code/);
 });
+
+test('technology stack expands from three tags to the complete public list', async () => {
+  const stack = getPortfolioItem('stack');
+  assert.deepEqual(stack.tags, ['Go', 'PostgreSQL', 'Kafka']);
+  assert.ok(stack.fullStack.length > stack.tags.length);
+  assert.equal(new Set(stack.fullStack).size, stack.fullStack.length);
+  assert.deepEqual(stack.fullStack.slice(0, stack.tags.length), stack.tags);
+  for (const technology of ['gRPC', 'Qdrant', 'Docker', 'Gio', 'WebAssembly', 'Next.js']) {
+    assert.ok(stack.fullStack.includes(technology));
+    assert.ok(findPortfolioItems(technology).some(({ slug }) => slug === 'stack'));
+  }
+  assert.doesNotMatch(JSON.stringify(stack.tags), /\+ ещё/);
+
+  const component = await readFile(new URL('../src/app/components/SearchExperience.js', import.meta.url), 'utf8');
+  assert.match(component, /<button[\s\S]*?aria-expanded=\{expanded\}[\s\S]*?onClick=\{\(\) => setExpanded/);
+  assert.match(component, /<article className=\{cardClassName\}/);
+  assert.match(component, /<Link href=\{`\/explore\/\$\{item.slug\}`\} className=\{styles.cardMainLink\}/);
+});

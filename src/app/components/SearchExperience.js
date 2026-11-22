@@ -12,13 +12,12 @@ const suggestedQueries = ['Go', 'Smart-Crawler', 'Kafka', 'Достижения'
 const AUTO_QUERY = 'SmaF1';
 
 function SearchCard({ item, index }) {
+  const [expanded, setExpanded] = useState(false);
   const isProfile = item.kind === 'profile';
-  return (
-    <Link
-      href={`/explore/${item.slug}`}
-      className={`${styles.resultCard} ${styles[`tone_${item.accent}`]} ${isProfile ? styles.profileCard : ''} ${item.featured && !isProfile ? styles.featureCard : ''}`}
-      style={{ '--card-index': index }}
-    >
+  const hasExpandableStack = item.slug === 'stack' && item.fullStack?.length > item.tags.length;
+  const cardClassName = `${styles.resultCard} ${styles[`tone_${item.accent}`]} ${isProfile ? styles.profileCard : ''} ${item.featured && !isProfile ? styles.featureCard : ''}`;
+  const cardContent = (
+    <>
       <div className={styles.cardTop}>
         <span className={styles.cardIcon}><Icon name={item.icon} size={21} /></span>
         <span className={styles.cardArrow}><Icon name="arrowUp" size={20} /></span>
@@ -34,6 +33,39 @@ function SearchCard({ item, index }) {
         <h3>{item.title}</h3>
         <p>{item.description}</p>
       </div>
+    </>
+  );
+
+  // The expand control must not be nested inside the card's navigation link.
+  if (hasExpandableStack) {
+    return (
+      <article className={cardClassName} style={{ '--card-index': index }}>
+        <Link href={`/explore/${item.slug}`} className={styles.cardMainLink} aria-label={`Подробнее: ${item.title}`}>
+          {cardContent}
+        </Link>
+        <div className={styles.cardBottom}>
+          <div className={styles.tagRow} id={`stack-tags-${item.slug}`}>
+            {(expanded ? item.fullStack : item.tags).map((tag) => <span key={tag}>{tag}</span>)}
+            <button
+              type="button"
+              className={styles.expandTagsButton}
+              aria-expanded={expanded}
+              aria-controls={`stack-tags-${item.slug}`}
+              aria-label={expanded ? 'Свернуть стек технологий' : 'Показать полный стек технологий'}
+              onClick={() => setExpanded((current) => !current)}
+            >
+              {expanded ? 'Свернуть' : '+ ещё'}
+            </button>
+          </div>
+          {item.stat && <span className={styles.cardStat}>{item.stat}</span>}
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <Link href={`/explore/${item.slug}`} className={cardClassName} style={{ '--card-index': index }}>
+      {cardContent}
       <div className={styles.cardBottom}>
         <div className={styles.tagRow}>{item.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}</div>
         {item.stat && <span className={styles.cardStat}>{item.stat}</span>}
