@@ -19,6 +19,25 @@ test('every result has a unique slug and a complete detail page', () => {
   }
 });
 
+test('only approved public pages are present', () => {
+  const approvedSlugs = [
+    'about',
+    'smart-crawler',
+    'matchmaking',
+    'orders-payments',
+    'experience',
+    'stack',
+    'achievements',
+    'education',
+    'contacts',
+  ];
+  assert.deepEqual(
+    portfolioItems.map(({ slug }) => slug).sort(),
+    approvedSlugs.sort(),
+  );
+  assert.equal(getPortfolioItem('not-a-public-page'), undefined);
+});
+
 test('automatically typed nickname displays all results', () => {
   assert.equal(findPortfolioItems('SmaF1').length, portfolioItems.length);
   assert.equal(findPortfolioItems('smaf1').length, portfolioItems.length);
