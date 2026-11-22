@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Icon from './Icon';
 import styles from './SiteHeader.module.scss';
 
@@ -7,7 +8,7 @@ export default function SiteHeader({ compact = false }) {
     <header className={`${styles.header} ${compact ? styles.compact : ''}`}>
       <div className={styles.inner}>
         <Link href="/" className={styles.brand} aria-label="SmaF1 — на главную">
-          <span className={styles.mark}>s<span>·</span></span>
+          <Image src="/main.png" width={44} height={44} alt="" className={styles.mark} priority />
           <span className={styles.brandName}>SmaF1<span className={styles.brandPeriod}>.</span></span>
         </Link>
         <div className={styles.centerMark}><span className={styles.dot} /> Open to interesting projects</div>

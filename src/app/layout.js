@@ -1,3 +1,4 @@
+import '@fontsource-variable/rubik';
 import './globals.scss';
 
 export const metadata = {

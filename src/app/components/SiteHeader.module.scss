@@ -8,10 +8,8 @@
 }
 .brand { display: flex; align-items: center; gap: 13px; flex: 0 0 auto; }
 .mark {
-  display: flex; align-items: center; justify-content: center; width: 41px; height: 41px; border-radius: 13px;
-  background: #a694ff; color: #0a0d17; font-size: 25px; font-weight: 850; letter-spacing: -.13em; line-height: 1;
-  box-shadow: 0 4px 22px rgba(143, 119, 255, .18);
-  span { color: #fff; }
+  display: block; width: 44px; height: 44px; flex: 0 0 44px;
+  object-fit: contain;
 }
 .brandName { font-size: 22px; font-weight: 770; letter-spacing: -.07em; }
 .brandPeriod { color: #a998ff; }
@@ -24,7 +22,7 @@
 @media (max-width: 950px) { .centerMark { display: none; } }
 @media (max-width: 620px) {
   .inner { width: min(100% - 32px, 1360px); min-height: 70px; gap: 16px; }
-  .mark { width: 35px; height: 35px; font-size: 22px; border-radius: 11px; }
+  .mark { width: 37px; height: 37px; flex-basis: 37px; }
   .brand { gap: 9px; }
   .brandName { font-size: 20px; }
   .nav { gap: 10px; }
