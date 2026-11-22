@@ -62,6 +62,13 @@ export default async function DetailPage({ params }) {
           </div>
         )}
 
+        {item.preview && (
+          <figure className={styles.projectPreview}>
+            <Image src={item.preview.src} alt={item.preview.alt} width={950} height={540} className={styles.projectPreviewImage} sizes="(max-width: 780px) 100vw, 900px" />
+            <figcaption>{item.preview.caption}</figcaption>
+          </figure>
+        )}
+
         <div className={styles.contentLayout}>
           <div className={styles.sections}>
             {item.sections.map((section, index) => (

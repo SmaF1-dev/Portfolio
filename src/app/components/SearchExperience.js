@@ -196,7 +196,7 @@ export default function SearchExperience() {
         </section>
       </main>
       <footer className={styles.footer}>
-        <span>© 2026 SmaF1 · Made with curiosity & code</span>
+        <span>© 2026 SmaF1</span>
         <div><a href={identity.github} target="_blank" rel="noopener noreferrer">GitHub</a><a href={identity.telegram} target="_blank" rel="noopener noreferrer">Telegram</a><a href={`mailto:${identity.email}`}>Email</a></div>
         <Link href="/explore/about">Никита Лютый <Icon name="arrowUp" size={13} /></Link>
       </footer>

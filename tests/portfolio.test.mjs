@@ -23,6 +23,7 @@ test('only approved public pages are present', () => {
   const approvedSlugs = [
     'about',
     'smart-crawler',
+    'maintenance-regulations',
     'matchmaking',
     'orders-payments',
     'experience',
@@ -47,6 +48,8 @@ test('automatically typed nickname displays all results', () => {
 test('search matches technologies, projects and Russian keywords', () => {
   assert.ok(findPortfolioItems('Kafka').some(({ slug }) => slug === 'smart-crawler'));
   assert.ok(findPortfolioItems('Smart-Crawler').some(({ slug }) => slug === 'smart-crawler'));
+  assert.ok(findPortfolioItems('Электроника').some(({ slug }) => slug === 'maintenance-regulations'));
+  assert.ok(findPortfolioItems('Gio').some(({ slug }) => slug === 'maintenance-regulations'));
   assert.ok(findPortfolioItems('достижения').some(({ slug }) => slug === 'achievements'));
   assert.equal(findPortfolioItems('nonexistent-super-keyword').length, 0);
 });
@@ -63,6 +66,33 @@ test('public links use safe URL schemes', () => {
   assert.match(identity.github, /^https:\/\//);
   assert.match(identity.telegram, /^https:\/\//);
   for (const item of portfolioItems) {
-    for (const link of item.links ?? []) assert.match(link.href, /^(https:\/\/|mailto:)/);
+    for (const link of item.links ?? []) assert.match(link.href, /^(https:\/\/|mailto:|\/(?!\/)evidence\/[a-z0-9-]+\.pdf#page=[1-9][0-9]*$)/);
   }
+});
+
+test('company experience and published evidence are present', async () => {
+  const company = getPortfolioItem('experience');
+  const app = getPortfolioItem('maintenance-regulations');
+  assert.match(JSON.stringify(company), /ПСЦ Электроника/);
+  assert.match(JSON.stringify(app), /WebAssembly/);
+  assert.match(JSON.stringify(app), /Алексея Израилева/);
+  const fullPdf = '/evidence/electronika-news-2023-full.pdf#page=7';
+  assert.ok(app.links.some(({ href }) => href === fullPdf));
+  assert.ok(company.links.some(({ href }) => href === fullPdf));
+  assert.ok(!('preview' in app), 'The screenshot preview must not appear in the project');
+  assert.ok(!/фриланс/i.test(JSON.stringify(portfolioItems)));
+  const proof = new URL('../public/evidence/electronika-news-2023-full.pdf', import.meta.url);
+  const { stat, readFile } = await import('node:fs/promises');
+  const buffer = await readFile(proof);
+  assert.ok(buffer.subarray(0, 5).equals(Buffer.from('%PDF-')));
+  assert.ok(buffer.length > 1_000_000, 'The original full issue should be included, not an excerpt');
+  await assert.rejects(stat(new URL('../public/evidence/electronika-news-2023-pp7-8.pdf', import.meta.url)), { code: 'ENOENT' });
+  await assert.rejects(stat(new URL('../public/evidence/maintenance-app-2023.webp', import.meta.url)), { code: 'ENOENT' });
+});
+
+test('education has no graduation dates and footer has no removed slogan', async () => {
+  const education = getPortfolioItem('education');
+  assert.doesNotMatch(JSON.stringify(education), /2028|ожидаем(ый|ого) (год|выпуск)/i);
+  const footerSource = await readFile(new URL('../src/app/components/SearchExperience.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(footerSource, /Made with curiosity & code/);
 });

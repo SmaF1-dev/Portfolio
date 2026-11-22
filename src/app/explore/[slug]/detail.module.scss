@@ -41,6 +41,9 @@
 .metric + .metric { border-left: 1px solid rgba(180,197,225,.13); padding-left: 32px; }
 .metric strong { font-size: clamp(32px, 4vw, 51px); color: var(--accent); font-weight: 780; letter-spacing: -.055em; }
 .metric span { font-size: 12px; color: #a5b0c5; }
+.projectPreview { margin: 50px 0 0; padding: 24px; max-width: 900px; border-radius: 18px; border: 1px solid rgba(180,197,225,.16); background: rgba(255,255,255,.035); }
+.projectPreviewImage { display: block; width: 100%; height: auto; border-radius: 10px; background: #e8e9ed; }
+.projectPreview figcaption { margin-top: 14px; color: #a9b6cb; font-size: 12px; line-height: 1.6; }
 .contentLayout { display: grid; grid-template-columns: minmax(0, 1fr) 275px; align-items: start; gap: 82px; padding: 80px 0 95px; }
 .sections { min-width: 0; }
 .contentSection { padding-bottom: 47px; margin-bottom: 43px; border-bottom: 1px solid rgba(179,196,222,.12); }
@@ -91,6 +94,7 @@
   .intro > p { font-size: 15px; }
   .actions { flex-direction: column; align-items: stretch; }
   .identityCard { padding: 21px; }
+  .projectPreview { padding: 12px; margin-top: 28px; }
   .metrics { grid-template-columns: 1fr; }
   .metric { padding: 22px 0; }
   .metric + .metric { border-left: 0; border-top: 1px solid rgba(180,197,225,.13); padding: 22px 0; }
