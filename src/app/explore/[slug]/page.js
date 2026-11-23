@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import SiteHeader from '../../components/SiteHeader';
 import Icon from '../../components/Icon';
 import { getPortfolioItem, portfolioItems, identity } from '../../data/portfolio';
@@ -20,6 +20,7 @@ export async function generateMetadata({ params }) {
 export default async function DetailPage({ params }) {
   const { slug } = await params;
   const item = getPortfolioItem(slug);
+  if (slug === 'contacts') redirect('/explore/about#contacts');
   if (!item) notFound();
   const otherItems = portfolioItems.filter((entry) => entry.slug !== slug && entry.category === item.category).slice(0, 3);
   const related = otherItems.length ? otherItems : portfolioItems.filter((entry) => entry.slug !== slug).slice(0, 3);
@@ -79,8 +80,8 @@ export default async function DetailPage({ params }) {
               </section>
             ))}
             {item.links?.length > 0 && (
-              <section className={styles.contentSection}>
-                <div className={styles.sectionTitle}><span>{String(item.sections.length + 1).padStart(2, '0')}</span><h2>Ссылки</h2></div>
+              <section className={styles.contentSection} id={item.slug === 'about' ? 'contacts' : undefined} style={item.slug === 'about' ? { scrollMarginTop: 40 } : undefined}>
+                <div className={styles.sectionTitle}><span>{String(item.sections.length + 1).padStart(2, '0')}</span><h2>{item.slug === 'about' ? 'Контакты' : 'Ссылки'}</h2></div>
                 <div className={styles.linkList}>
                   {item.links.map((link) => <a key={link.href} href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">{link.label}<Icon name="arrowUp" size={19} /></a>)}
                 </div>

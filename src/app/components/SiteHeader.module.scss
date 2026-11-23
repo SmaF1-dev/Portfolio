@@ -12,12 +12,10 @@
   object-fit: contain;
 }
 .brandName { font-size: 22px; font-weight: 770; letter-spacing: -.07em; }
-.brandPeriod { color: #a998ff; }
-.centerMark { font-size: 11px; font-weight: 700; letter-spacing: .09em; color: #8490a9; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
-.dot { width: 6px; height: 6px; display: block; flex: 0 0 auto; border-radius: 50%; background: #8feccf; box-shadow: 0 0 0 4px rgba(143,236,207,.08), 0 0 16px rgba(143,236,207,.45); }
+.centerMark { font-size: 12px; font-weight: 740; letter-spacing: .08em; color: #a8b7d0; text-transform: uppercase; padding-left: 14px; border-left: 2px solid #a998ff; }
 .nav { display: flex; align-items: center; gap: 28px; }
-.navText { font-size: 13px; font-weight: 650; color: #b4bed0; transition: color .2s; &:hover { color: #fff; } }
-.github { display: inline-flex; align-items: center; gap: 9px; border: 1px solid rgba(189, 199, 225, .19); background: rgba(255,255,255,.03); padding: 11px 13px; border-radius: 11px; font-size: 13px; font-weight: 750; transition: background .2s, border-color .2s, transform .2s; &:hover { background: rgba(255,255,255,.08); border-color: rgba(189,199,225,.4); transform: translateY(-2px); } }
+.navText { font-size: 14px; font-weight: 650; color: #b4bed0; transition: color .2s; &:hover { color: #fff; } }
+.github { display: inline-flex; align-items: center; gap: 9px; border: 1px solid rgba(189, 199, 225, .19); background: rgba(255,255,255,.03); padding: 11px 13px; border-radius: 11px; font-size: 14px; font-weight: 750; transition: background .2s, border-color .2s, transform .2s; &:hover { background: rgba(255,255,255,.08); border-color: rgba(189,199,225,.4); transform: translateY(-2px); } }
 .compact { background: rgba(8,11,19,.58); }
 @media (max-width: 950px) { .centerMark { display: none; } }
 @media (max-width: 620px) {
