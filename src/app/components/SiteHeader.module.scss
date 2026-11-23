@@ -12,12 +12,10 @@
   object-fit: contain;
 }
 .brandName { font-size: 22px; font-weight: 770; letter-spacing: -.07em; }
-.centerMark { font-size: 12px; font-weight: 740; letter-spacing: .08em; color: #a8b7d0; text-transform: uppercase; padding-left: 14px; border-left: 2px solid #a998ff; }
 .nav { display: flex; align-items: center; gap: 28px; }
 .navText { font-size: 14px; font-weight: 650; color: #b4bed0; transition: color .2s; &:hover { color: #fff; } }
 .github { display: inline-flex; align-items: center; gap: 9px; border: 1px solid rgba(189, 199, 225, .19); background: rgba(255,255,255,.03); padding: 11px 13px; border-radius: 11px; font-size: 14px; font-weight: 750; transition: background .2s, border-color .2s, transform .2s; &:hover { background: rgba(255,255,255,.08); border-color: rgba(189,199,225,.4); transform: translateY(-2px); } }
 .compact { background: rgba(8,11,19,.58); }
-@media (max-width: 950px) { .centerMark { display: none; } }
 @media (max-width: 620px) {
   .inner { width: min(100% - 32px, 1360px); min-height: 70px; gap: 16px; }
   .mark { width: 37px; height: 37px; flex-basis: 37px; }

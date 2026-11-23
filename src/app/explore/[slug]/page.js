@@ -46,7 +46,7 @@ export default async function DetailPage({ params }) {
             </div>
           </div>
           <aside className={styles.identityCard}>
-            <div className={styles.identityCardTop}><span>PERSONAL INDEX / 2026</span><Icon name="sparkle" size={16} /></div>
+            <div className={styles.identityCardTop}><span>PERSONAL INDEX / 2026</span></div>
             <div className={styles.avatarWrap}><Image src="/avatar.jpg" width={104} height={104} alt="Никита Лютый" priority /></div>
             <h2>{identity.name}</h2>
             <p>{identity.role}</p>

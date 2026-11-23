@@ -167,7 +167,7 @@ export default function SearchExperience() {
       <SiteHeader />
       <main className={styles.main}>
         <section className={styles.hero} aria-labelledby="hero-title">
-          <div className={styles.eyebrow}><span className={styles.eyebrowIcon}><Icon name="sparkle" size={13} /></span> НЕ ПРОСТО ПОРТФОЛИО · ИНТЕРАКТИВНЫЙ ПОИСК</div>
+          <div className={styles.eyebrow}>НЕ ПРОСТО ПОРТФОЛИО · ИНТЕРАКТИВНЫЙ ПОИСК</div>
           <h1 id="hero-title">За каждым ником<br />стоит <span className={styles.gradientText}>история</span></h1>
           <p className={styles.heroLead}>Моя — про код, сложные системы и желание делать вещи, которые действительно работают</p>
           <form onSubmit={submitSearch} className={styles.searchForm} role="search">

@@ -140,7 +140,7 @@ test('current resume data updates Smart-Crawler and Electronika', () => {
   assert.match(JSON.stringify(app), /36 с/);
   assert.match(JSON.stringify(app), /55\/60 до 59\/60/);
   assert.match(JSON.stringify(app), /163 часов/);
-  assert.match(JSON.stringify(app), /не содержит приведённых выше метрик/);
+  assert.match(JSON.stringify(app), /не выдаю её за подтверждение этих метрик/);
 });
 
 test('repeating nickname animation and concise labels are deliberate', async () => {
@@ -153,4 +153,21 @@ test('repeating nickname animation and concise labels are deliberate', async () 
   assert.doesNotMatch(ui, /statusDot|heroFootnote|profileOnline/);
   assert.doesNotMatch(header, /styles\.dot|brandPeriod/);
   for (const item of portfolioItems) assert.ok(!item.description.endsWith('.'), item.slug);
+});
+
+
+test('public copy uses first person without resume attribution and decorative marks', async () => {
+  const content = JSON.stringify(portfolioItems);
+  assert.doesNotMatch(content, /по (?:актуальному|обновлённому|моему)?\s*резюме|в обновлённом резюме|по данным предыдущего портфолио|в предыдущей версии портфолио/i);
+  for (const slug of ['about', 'smart-crawler', 'maintenance-regulations', 'matchmaking', 'orders-payments', 'experience', 'stack', 'achievements', 'education']) {
+    const item = getPortfolioItem(slug);
+    assert.match(item.intro, /^(?:Я |Мой |Мне |Работаю |Разработал |Разрабатываю |Участвовал |Учусь |В ООО)/);
+  }
+  const header = await readFile(new URL('../src/app/components/SiteHeader.js', import.meta.url), 'utf8');
+  const home = await readFile(new URL('../src/app/components/SearchExperience.js', import.meta.url), 'utf8');
+  const details = await readFile(new URL('../src/app/explore/[slug]/page.js', import.meta.url), 'utf8');
+  const headerStyles = await readFile(new URL('../src/app/components/SiteHeader.module.scss', import.meta.url), 'utf8');
+  assert.doesNotMatch(header + headerStyles, /OPEN TO INTERESTING PROJECTS|centerMark/);
+  assert.doesNotMatch(home, /eyebrowIcon|name="sparkle"/);
+  assert.doesNotMatch(details, /name="sparkle"/);
 });

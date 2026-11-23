@@ -11,7 +11,6 @@ export default function SiteHeader({ compact = false }) {
           <Image src="/main.png" width={44} height={44} alt="" className={styles.mark} priority />
           <span className={styles.brandName}>SmaF1</span>
         </Link>
-        <div className={styles.centerMark}>OPEN TO INTERESTING PROJECTS</div>
         <nav className={styles.nav} aria-label="Основная навигация">
           <Link href="/explore/about" className={styles.navText}>Обо мне</Link>
           <Link href="/explore/about#contacts" className={styles.navText}>Контакты</Link>
