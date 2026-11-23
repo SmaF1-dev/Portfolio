@@ -30,7 +30,6 @@ test('only approved public pages are present', () => {
     'stack',
     'achievements',
     'education',
-    'contacts',
   ];
   assert.deepEqual(
     portfolioItems.map(({ slug }) => slug).sort(),
@@ -113,4 +112,62 @@ test('technology stack expands from three tags to the complete public list', asy
   assert.match(component, /<button[\s\S]*?aria-expanded=\{expanded\}[\s\S]*?onClick=\{\(\) => setExpanded/);
   assert.match(component, /<article className=\{cardClassName\}/);
   assert.match(component, /<Link href=\{`\/explore\/\$\{item.slug\}`\} className=\{styles.cardMainLink\}/);
+});
+
+
+test('profile combines biography and contacts without a duplicate result', async () => {
+  const profile = getPortfolioItem('about');
+  assert.equal(getPortfolioItem('contacts'), undefined);
+  assert.ok(profile.search.includes('контакты'));
+  assert.ok(findPortfolioItems('контакты').some(({ slug }) => slug === 'about'));
+  assert.equal(profile.links.length, 3);
+  assert.ok(profile.links.some(({ href }) => href.startsWith('mailto:')));
+  const navigation = await readFile(new URL('../src/app/components/SiteHeader.js', import.meta.url), 'utf8');
+  assert.match(navigation, /\/explore\/about#contacts/);
+  assert.doesNotMatch(navigation, /\/explore\/contacts/);
+  const detailPage = await readFile(new URL('../src/app/explore/[slug]/page.js', import.meta.url), 'utf8');
+  assert.match(detailPage, /redirect\('\/explore\/about#contacts'\)/);
+  assert.match(detailPage, /id=\{item.slug === 'about' \? 'contacts'/);
+});
+
+test('current resume data updates Smart-Crawler and Electronika', () => {
+  const crawler = getPortfolioItem('smart-crawler');
+  const employment = getPortfolioItem('experience');
+  const app = getPortfolioItem('maintenance-regulations');
+  assert.match(JSON.stringify(crawler), /500 тыс/);
+  assert.match(JSON.stringify(employment), /февраль 2023 — апрель 2024/);
+  assert.match(JSON.stringify(app), /2 мин 48 с/);
+  assert.match(JSON.stringify(app), /36 с/);
+  assert.match(JSON.stringify(app), /55\/60 до 59\/60/);
+  assert.match(JSON.stringify(app), /163 часов/);
+  assert.match(JSON.stringify(app), /не выдаю её за подтверждение этих метрик/);
+});
+
+test('repeating nickname animation and concise labels are deliberate', async () => {
+  const ui = await readFile(new URL('../src/app/components/SearchExperience.js', import.meta.url), 'utf8');
+  const header = await readFile(new URL('../src/app/components/SiteHeader.js', import.meta.url), 'utf8');
+  assert.match(ui, /direction = -1/);
+  assert.match(ui, /setTimeout\(tick, 2900\)/);
+  assert.match(ui, /const searchQuery = hasInteracted \? query : AUTO_QUERY/);
+  assert.doesNotMatch(ui, /Профиль найден/);
+  assert.doesNotMatch(ui, /statusDot|heroFootnote|profileOnline/);
+  assert.doesNotMatch(header, /styles\.dot|brandPeriod/);
+  for (const item of portfolioItems) assert.ok(!item.description.endsWith('.'), item.slug);
+});
+
+
+test('public copy uses first person without resume attribution and decorative marks', async () => {
+  const content = JSON.stringify(portfolioItems);
+  assert.doesNotMatch(content, /по (?:актуальному|обновлённому|моему)?\s*резюме|в обновлённом резюме|по данным предыдущего портфолио|в предыдущей версии портфолио/i);
+  for (const slug of ['about', 'smart-crawler', 'maintenance-regulations', 'matchmaking', 'orders-payments', 'experience', 'stack', 'achievements', 'education']) {
+    const item = getPortfolioItem(slug);
+    assert.match(item.intro, /^(?:Я |Мой |Мне |Работаю |Разработал |Разрабатываю |Участвовал |Учусь |В ООО)/);
+  }
+  const header = await readFile(new URL('../src/app/components/SiteHeader.js', import.meta.url), 'utf8');
+  const home = await readFile(new URL('../src/app/components/SearchExperience.js', import.meta.url), 'utf8');
+  const details = await readFile(new URL('../src/app/explore/[slug]/page.js', import.meta.url), 'utf8');
+  const headerStyles = await readFile(new URL('../src/app/components/SiteHeader.module.scss', import.meta.url), 'utf8');
+  assert.doesNotMatch(header + headerStyles, /OPEN TO INTERESTING PROJECTS|centerMark/);
+  assert.doesNotMatch(home, /eyebrowIcon|name="sparkle"/);
+  assert.doesNotMatch(details, /name="sparkle"/);
 });

@@ -25,7 +25,6 @@ function SearchCard({ item, index }) {
       {isProfile && (
         <div className={styles.profilePicture}>
           <Image src="/avatar.jpg" alt="Фото Никиты Лютого" width={88} height={88} priority />
-          <span className={styles.profileOnline} />
         </div>
       )}
       <div className={styles.cardBody}>
@@ -82,45 +81,53 @@ export default function SearchExperience() {
   const searchInput = useRef(null);
   const resultsRef = useRef(null);
   const [animationDisabled, setAnimationDisabled] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
-    // Respect reduced-motion preferences: show the complete query and results immediately.
+    // The showcase loops until the visitor interacts; actual search results never flicker.
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion) {
-      const immediateReveal = window.setTimeout(() => {
-        setAnimationDisabled(true);
-        setQuery(AUTO_QUERY);
-        setPhase('ready');
+      const reveal = window.setTimeout(() => {
+        if (!editedByUser.current) {
+          setAnimationDisabled(true);
+          setQuery(AUTO_QUERY);
+          setPhase('ready');
+        }
       }, 0);
-      return () => window.clearTimeout(immediateReveal);
+      return () => window.clearTimeout(reveal);
     }
-    let cursor = 0;
-    let revealTimeout;
-    const typingTimer = window.setInterval(() => {
-      if (editedByUser.current) {
-        window.clearInterval(typingTimer);
-        return;
+
+    let timeout;
+    let position = 0;
+    let direction = 1;
+    const tick = () => {
+      if (editedByUser.current) return;
+      position += direction;
+      setQuery(AUTO_QUERY.slice(0, position));
+
+      if (position === AUTO_QUERY.length && direction === 1) {
+        setPhase('ready');
+        direction = -1;
+        timeout = window.setTimeout(tick, 2900);
+      } else if (position === 0 && direction === -1) {
+        direction = 1;
+        timeout = window.setTimeout(tick, 650);
+      } else {
+        timeout = window.setTimeout(tick, direction === 1 ? 180 : 105);
       }
-      cursor += 1;
-      setQuery(AUTO_QUERY.slice(0, cursor));
-      if (cursor === AUTO_QUERY.length) {
-        window.clearInterval(typingTimer);
-        revealTimeout = window.setTimeout(() => {
-          if (!editedByUser.current) setPhase('ready');
-        }, 430);
-      }
-    }, 150);
-    return () => {
-      window.clearInterval(typingTimer);
-      window.clearTimeout(revealTimeout);
     };
+    timeout = window.setTimeout(tick, 520);
+    return () => window.clearTimeout(timeout);
   }, []);
 
-  const results = findPortfolioItems(query, category);
+  // Keep the full result set visible while the decorative nickname animation repeats.
+  const searchQuery = hasInteracted ? query : AUTO_QUERY;
+  const results = findPortfolioItems(searchQuery, category);
   const showResults = phase === 'ready';
 
   function changeQuery(value) {
     editedByUser.current = true;
+    setHasInteracted(true);
     setQuery(value);
     setPhase('ready');
   }
@@ -128,8 +135,17 @@ export default function SearchExperience() {
   function submitSearch(event) {
     event.preventDefault();
     editedByUser.current = true;
+    setHasInteracted(true);
     setPhase('ready');
     if (resultsRef.current) resultsRef.current.scrollIntoView({ behavior: animationDisabled ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function focusSearch() {
+    if (editedByUser.current) return;
+    editedByUser.current = true;
+    setHasInteracted(true);
+    setQuery(AUTO_QUERY);
+    setPhase('ready');
   }
 
   function chooseQuery(value) {
@@ -151,9 +167,9 @@ export default function SearchExperience() {
       <SiteHeader />
       <main className={styles.main}>
         <section className={styles.hero} aria-labelledby="hero-title">
-          <div className={styles.eyebrow}><span className={styles.eyebrowIcon}><Icon name="sparkle" size={13} /></span> НЕ ПРОСТО ПОРТФОЛИО · ИНТЕРАКТИВНЫЙ ПОИСК</div>
-          <h1 id="hero-title">За каждым ником<br />стоит <span className={styles.gradientText}>история.</span></h1>
-          <p className={styles.heroLead}>Моя — про код, сложные системы и желание делать вещи, которые действительно работают.</p>
+          <div className={styles.eyebrow}>НЕ ПРОСТО ПОРТФОЛИО · ИНТЕРАКТИВНЫЙ ПОИСК</div>
+          <h1 id="hero-title">За каждым ником<br />стоит <span className={styles.gradientText}>история</span></h1>
+          <p className={styles.heroLead}>Моя — про код, сложные системы и желание делать вещи, которые действительно работают</p>
           <form onSubmit={submitSearch} className={styles.searchForm} role="search">
             <div className={styles.searchBox}>
               <Icon name="search" size={24} className={styles.searchIcon} />
@@ -167,11 +183,12 @@ export default function SearchExperience() {
                 spellCheck="false"
                 value={query}
                 onChange={(event) => changeQuery(event.target.value)}
-                placeholder="Введите ник или запрос..."
+                onFocus={focusSearch}
+                placeholder="Введите ник или запрос"
                 className={styles.searchInput}
               />
-              {phase === 'typing' && <span className={styles.typingIndicator} aria-hidden="true" />}
-              {query && phase === 'ready' && <button type="button" className={styles.clearButton} onClick={() => changeQuery('')} aria-label="Очистить поиск"><Icon name="close" size={18} /></button>}
+              {!hasInteracted && !animationDisabled && <span className={styles.typingIndicator} aria-hidden="true" />}
+              {hasInteracted && query && phase === 'ready' && <button type="button" className={styles.clearButton} onClick={() => changeQuery('')} aria-label="Очистить поиск"><Icon name="close" size={18} /></button>}
               <button type="submit" className={styles.searchButton} aria-label="Найти"><span>Найти</span><Icon name="arrow" size={18} /></button>
             </div>
           </form>
@@ -181,10 +198,6 @@ export default function SearchExperience() {
               <button className={styles.suggestion} type="button" key={item} onClick={() => chooseQuery(item)}>{item}<Icon name="arrowUp" size={12} /></button>
             ))}
           </div>
-          <div className={styles.heroFootnote}>
-            <span className={styles.statusDot} />
-            {phase === 'typing' ? 'Ищу SmaF1 в базе данных...' : 'Профиль найден · данные актуальны на ноябрь 2026'}
-          </div>
         </section>
 
         <section ref={resultsRef} className={`${styles.resultsSection} ${showResults ? styles.revealed : ''}`} aria-labelledby="results-title" aria-live="polite">
@@ -193,7 +206,7 @@ export default function SearchExperience() {
               <div className={styles.sectionHeading}>
                 <div>
                   <p className={styles.sectionKicker}>01 / РЕЗУЛЬТАТЫ ПОИСКА</p>
-                  <h2 id="results-title">{query.trim() === 'SmaF1' || !query.trim() ? 'Всё, что обо мне стоит знать.' : `Результаты: «${query}»`}</h2>
+                  <h2 id="results-title">{searchQuery.trim().toLocaleLowerCase('ru-RU') === 'smaf1' || !searchQuery.trim() ? 'Всё, что обо мне стоит знать' : `Результаты: «${searchQuery}»`}</h2>
                 </div>
                 <span className={styles.resultCount}><span>{results.length.toString().padStart(2, '0')}</span> / {portfolioItems.length.toString().padStart(2, '0')} найдено</span>
               </div>
@@ -210,7 +223,7 @@ export default function SearchExperience() {
                 <div className={styles.emptyState}>
                   <Icon name="search" size={35} />
                   <h3>По этому запросу ничего не нашлось</h3>
-                  <p>Попробуй «Go», «Kafka», «Smart-Crawler» или верни полный список.</p>
+                  <p>Попробуй «Go», «Kafka», «Smart-Crawler» или верни полный список</p>
                   <button type="button" onClick={resetSearch}>Показать всё <Icon name="arrow" size={18} /></button>
                 </div>
               )}
@@ -221,8 +234,8 @@ export default function SearchExperience() {
         <section className={styles.bottomCta} aria-label="Контакты">
           <div>
             <span className={styles.sectionKicker}>ЕСТЬ ИДЕЯ?</span>
-            <h2>Давай обсудим <span>её вместе.</span></h2>
-            <p>Можем поговорить о Go, архитектуре или интересном проекте.</p>
+            <h2>Давай обсудим <span>её вместе</span></h2>
+            <p>Можем поговорить о Go, архитектуре или интересном проекте</p>
           </div>
           <a href={identity.telegram} target="_blank" rel="noopener noreferrer" className={styles.contactButton}>Написать в Telegram <Icon name="arrowUp" size={18} /></a>
         </section>

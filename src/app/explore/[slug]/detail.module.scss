@@ -16,14 +16,14 @@
 .breadcrumbs span:last-child { color: var(--accent); }
 .headLayout { display: grid; grid-template-columns: minmax(0, 1fr) 296px; align-items: end; gap: 75px; padding: 82px 0 74px; border-bottom: 1px solid rgba(183,196,228,.13); }
 .topline { margin-bottom: 24px; }
-.sectionNum { color: #8894ac; font-size: 10px; letter-spacing: .16em; font-weight: 700; white-space: nowrap; }
-.overline { display: inline-flex; align-items: center; gap: 10px; color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .035em; }
+.sectionNum { color: #8894ac; font-size: 12px; letter-spacing: .13em; font-weight: 700; white-space: nowrap; }
+.overline { display: inline-flex; align-items: center; gap: 10px; color: var(--accent); font-size: 13px; font-weight: 750; letter-spacing: .035em; }
 .intro h1 { margin: 19px 0 25px; font-size: clamp(45px, 5.7vw, 78px); letter-spacing: -.065em; line-height: 1.065; overflow-wrap: anywhere; }
 .intro > p { max-width: 760px; font-size: clamp(16px, 1.6vw, 18px); line-height: 1.7; color: #afbbce; margin: 0 0 23px; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tags span { border: 1px solid rgba(174,189,222,.16); color: #b3bed0; padding: 8px 11px; border-radius: 8px; background: rgba(255,255,255,.025); font-size: 11px; font-weight: 600; }
+.tags span { border: 1px solid rgba(174,189,222,.16); color: #b3bed0; padding: 8px 11px; border-radius: 8px; background: rgba(255,255,255,.025); font-size: 12px; font-weight: 600; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 32px; }
-.backLink, .externalLink { display: inline-flex; align-items: center; justify-content: center; gap: 11px; min-height: 47px; padding: 0 17px; border-radius: 10px; font-size: 12px; font-weight: 750; transition: transform .2s, background .2s; &:hover { transform: translateY(-2px); } }
+.backLink, .externalLink { display: inline-flex; align-items: center; justify-content: center; gap: 11px; min-height: 47px; padding: 0 17px; border-radius: 10px; font-size: 13px; font-weight: 750; transition: transform .2s, background .2s; &:hover { transform: translateY(-2px); } }
 .backLink { border: 1px solid rgba(186,199,221,.24); background: rgba(255,255,255,.03); color: #dce0f3; &:hover { background: rgba(255,255,255,.09); } }
 .externalLink { background: var(--accent); color: #11111d; &:hover { background: #e0d9ff; } }
 .identityCard { background: linear-gradient(160deg, rgba(34,39,63,.9), rgba(17,23,37,.96)); border: 1px solid rgba(182,192,221,.16); padding: 23px; border-radius: 20px; transform: rotate(1.5deg); box-shadow: 0 24px 60px rgba(0,0,0,.24); }
@@ -69,7 +69,7 @@
 .relatedGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
 .relatedCard { display: flex; flex-direction: column; background: linear-gradient(165deg, rgba(25,31,48,.95), rgba(18,23,35,.98)); border: 1px solid rgba(180,190,219,.13); border-radius: 16px; min-height: 213px; padding: 20px; transition: transform .2s, border-color .2s; &:hover { transform: translateY(-4px); border-color: var(--accent); } }
 .relatedCardTop { display: flex; justify-content: space-between; color: var(--accent); margin-bottom: auto; }
-.relatedOverline { color: var(--accent); font-size: 10px; font-weight: 700; margin-top: 24px; }
+.relatedOverline { color: var(--accent); font-size: 12px; font-weight: 700; margin-top: 24px; }
 .relatedCard strong { font-size: 18px; letter-spacing: -.035em; margin: 8px 0; }
 .relatedCard p { font-size: 12px; line-height: 1.5; color: #9facbf; margin: 0; }
 .footer { min-height: 105px; border-top: 1px solid rgba(175,195,221,.13); padding: 22px max(calc((100vw - 1200px) / 2), 38px); display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 12px; color: #8592a8; }
